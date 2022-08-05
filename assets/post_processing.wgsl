@@ -1,25 +1,26 @@
 #import bevy_pbr::mesh_view_bindings
 
+
 @group(1) @binding(0)
-var<uniform> screen_shape_factor: f32;
-
-@group(1) @binding(1)
-var<uniform> rows: f32;
-
-@group(1) @binding(2)
-var<uniform> brightness: f32;
-
-@group(1) @binding(3)
-var<uniform> edges_transition_size: f32;
-
-@group(1) @binding(4)
-var<uniform> channels_mask_min: f32;
-
-@group(1) @binding(5)
 var texture: texture_2d<f32>;
 
-@group(1) @binding(6)
+@group(1) @binding(1)
 var our_sampler: sampler;
+
+@group(1) @binding(2)
+var<uniform> screen_shape_factor: f32;
+
+@group(1) @binding(3)
+var<uniform> rows: f32;
+
+@group(1) @binding(4)
+var<uniform> brightness: f32;
+
+@group(1) @binding(5)
+var<uniform> edges_transition_size: f32;
+
+@group(1) @binding(6)
+var<uniform> channels_mask_min: f32;
 
 fn get_uv(pos: vec2<f32>) -> vec2<f32> {
     return pos / vec2(view.width, view.height);
