@@ -37,16 +37,7 @@ fn pixelate(uv: vec2<f32>, size: vec2<f32>) -> vec2<f32> {
 }
 
 fn get_texture_color(uv: vec2<f32>) -> vec4<f32> {
-    let offset_r = 0.001 * length(uv - vec2<f32>(0.5, 0.5)) + 0.0007;
-    let offset_g = 0.001 * length(uv - vec2<f32>(0.5, 0.5)) + 0.0001;
-    let offset_b = 0.001 * length(uv - vec2<f32>(0.5, 0.5)) + 0.00025;
-
-    return vec4<f32>(
-        textureSample(texture, our_sampler, uv + vec2<f32>(offset_r, -offset_r)).r,
-        textureSample(texture, our_sampler, uv + vec2<f32>(-offset_g, 0.0)).g,
-        textureSample(texture, our_sampler, uv + vec2<f32>(0.0, offset_b)).b,
-        1.0
-    );
+    return textureSample(texture, our_sampler, uv);
 }
 
 fn apply_pixel_rows(color: vec4<f32>, uv: vec2<f32>, rows: f32) -> vec4<f32> {
