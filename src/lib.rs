@@ -9,6 +9,7 @@
 //! rendering concepts and wgpu.
 
 use bevy::{
+    asset::embedded_asset,
     core_pipeline::{
         core_3d::graph::{Core3d, Node3d},
         fullscreen_vertex_shader::fullscreen_shader_vertex_state,
@@ -33,14 +34,12 @@ use bevy::{
     },
 };
 
-/// This example uses a shader source file from the assets subdirectory
-const SHADER_ASSET_PATH: &str = "post_processing.wgsl";
-
 /// It is generally encouraged to set up post processing effects as a plugin
 pub struct OldTvPlugin;
 
 impl Plugin for OldTvPlugin {
     fn build(&self, app: &mut App) {
+        embedded_asset!(app, "old_tv.wgsl");
         app.add_plugins((
             // The settings will be a component that lives in the main world but will
             // be extracted to the render world every frame.
@@ -252,7 +251,7 @@ impl FromWorld for PostProcessPipeline {
         let sampler = render_device.create_sampler(&SamplerDescriptor::default());
 
         // Get the shader handle
-        let shader = world.load_asset(SHADER_ASSET_PATH);
+        let shader = world.load_asset("embedded://old_tv_shader/old_tv.wgsl");
 
         let pipeline_id = world
             .resource_mut::<PipelineCache>()
