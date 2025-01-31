@@ -1,5 +1,6 @@
 use bevy::prelude::*;
 use old_tv_shader::{OldTvPlugin, OldTvSettings};
+
 /// Set up a simple 3D scene
 fn setup(
     mut commands: Commands,
