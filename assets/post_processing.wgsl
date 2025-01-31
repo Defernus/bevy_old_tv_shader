@@ -2,7 +2,7 @@
 
 @group(0) @binding(0) var screen_texture: texture_2d<f32>;
 @group(0) @binding(1) var texture_sampler: sampler;
-struct PostProcessSettings {
+struct OldTvSettings {
     screen_shape_factor: f32,
     rows: f32,
     brightness: f32,
@@ -13,7 +13,7 @@ struct PostProcessSettings {
     _webgl2_padding: vec3<f32>
 #endif
 }
-@group(0) @binding(2) var<uniform> settings: PostProcessSettings;
+@group(0) @binding(2) var<uniform> settings: OldTvSettings;
 
 fn apply_screen_shape(uv_: vec2<f32>, factor: f32) -> vec2<f32> {
     var uv = uv_ - vec2(0.5, 0.5);

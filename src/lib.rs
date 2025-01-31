@@ -36,11 +36,10 @@ use bevy::{
 /// This example uses a shader source file from the assets subdirectory
 const SHADER_ASSET_PATH: &str = "post_processing.wgsl";
 
-
 /// It is generally encouraged to set up post processing effects as a plugin
-pub struct PostProcessPlugin;
+pub struct OldTvPlugin;
 
-impl Plugin for PostProcessPlugin {
+impl Plugin for OldTvPlugin {
     fn build(&self, app: &mut App) {
         app.add_plugins((
             // The settings will be a component that lives in the main world but will
@@ -49,11 +48,11 @@ impl Plugin for PostProcessPlugin {
             // This plugin will take care of extracting it automatically.
             // It's important to derive [`ExtractComponent`] on [`PostProcessingSettings`]
             // for this plugin to work correctly.
-            ExtractComponentPlugin::<PostProcessSettings>::default(),
+            ExtractComponentPlugin::<OldTvSettings>::default(),
             // The settings will also be the data used in the shader.
             // This plugin will prepare the component for the GPU by creating a uniform buffer
             // and writing the data to that buffer every frame.
-            UniformComponentPlugin::<PostProcessSettings>::default(),
+            UniformComponentPlugin::<OldTvSettings>::default(),
         ));
 
         // We need to get the render app from the main app
@@ -120,11 +119,11 @@ impl ViewNode for PostProcessNode {
     // This query will only run on the view entity
     type ViewQuery = (
         &'static ViewTarget,
-        // This makes sure the node only runs on cameras with the PostProcessSettings component
-        &'static PostProcessSettings,
+        // This makes sure the node only runs on cameras with the OldTvSettings component
+        &'static OldTvSettings,
         // As there could be multiple post processing components sent to the GPU (one per camera),
         // we need to get the index of the one that is associated with the current view.
-        &'static DynamicUniformIndex<PostProcessSettings>,
+        &'static DynamicUniformIndex<OldTvSettings>,
     );
 
     // Runs the node logic
@@ -157,7 +156,7 @@ impl ViewNode for PostProcessNode {
         };
 
         // Get the settings uniform binding
-        let settings_uniforms = world.resource::<ComponentUniforms<PostProcessSettings>>();
+        let settings_uniforms = world.resource::<ComponentUniforms<OldTvSettings>>();
         let Some(settings_binding) = settings_uniforms.uniforms().binding() else {
             return Ok(());
         };
@@ -244,7 +243,7 @@ impl FromWorld for PostProcessPipeline {
                     // The sampler that will be used to sample the screen texture
                     sampler(SamplerBindingType::Filtering),
                     // The settings uniform that will control the effect
-                    uniform_buffer::<PostProcessSettings>(true),
+                    uniform_buffer::<OldTvSettings>(true),
                 ),
             ),
         );
@@ -294,7 +293,7 @@ impl FromWorld for PostProcessPipeline {
 
 // This is the component that will get passed to the shader
 #[derive(Component, Default, Clone, Copy, ExtractComponent, ShaderType, Reflect)]
-pub struct PostProcessSettings {
+pub struct OldTvSettings {
     /// the larger the value, the more rounded the screen (must be between 0 and 1)
     pub screen_shape_factor: f32,
     /// controls amount of screen rows
