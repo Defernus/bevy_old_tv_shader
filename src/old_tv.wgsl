@@ -72,7 +72,7 @@ fn apply_screen_edges(color: vec4<f32>, uv: vec2<f32>, ratio: f32) -> vec4<f32> 
     return vec4(color.xyz * f, 1.0);
 } 
 
-fn applye_brightness(color: vec4<f32>) -> vec4<f32> {
+fn apply_brightness(color: vec4<f32>) -> vec4<f32> {
     return color * vec4(vec3(settings.brightness), 1.0);
 }
 
@@ -92,7 +92,7 @@ fn fragment(in: FullscreenVertexOutput) -> @location(0) vec4<f32> {
     color = apply_pixel_rows(color, uv, rows);
     color = apply_pixel_cols(color, uv, cols);
 
-    color = applye_brightness(color);
+    color = apply_brightness(color);
     color = apply_screen_edges(color, uv, ratio);
 
     return color;

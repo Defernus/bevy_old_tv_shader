@@ -37,14 +37,8 @@ impl Plugin for OldTvPlugin {
         app.add_plugins((
             // The settings will be a component that lives in the main world but will
             // be extracted to the render world every frame.
-            // This makes it possible to control the effect from the main world.
-            // This plugin will take care of extracting it automatically.
-            // It's important to derive [`ExtractComponent`] on [`PostProcessingSettings`]
-            // for this plugin to work correctly.
             ExtractComponentPlugin::<OldTvSettings>::default(),
             // The settings will also be the data used in the shader.
-            // This plugin will prepare the component for the GPU by creating a uniform buffer
-            // and writing the data to that buffer every frame.
             UniformComponentPlugin::<OldTvSettings>::default(),
         ));
 
