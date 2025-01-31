@@ -1,7 +1,5 @@
 use bevy::{
-    core_pipeline::clear_color::ClearColorConfig,
     prelude::*,
-    reflect::TypeUuid,
     render::{
         camera::{Camera, RenderTarget},
         render_resource::{
@@ -148,7 +146,7 @@ fn main_camera_cube_rotator_system(
     }
 }
 
-#[derive(AsBindGroup, TypeUuid, Clone)]
+#[derive(AsBindGroup, Clone)]
 #[uuid = "b17e3ec0-b8e2-4b66-a62e-1ed9f4374350"]
 struct PostProcessingMaterial {
     #[texture(0)]
