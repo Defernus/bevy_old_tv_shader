@@ -1,7 +1,19 @@
 [package]
-name = "old_tv_shader"
+name = "bevy_old_tv_shader"
+authors = ["Denis Lavrentev"]
+repository = "https://github.com/Defernus/bevy_old_tv_shader"
 version = "0.2.0"
 edition = "2021"
+keywords = [
+    "bevy",
+    "gamedev",
+    "shader",
+]
+categories = [
+    "game-development"
+]
+readme = "README.md"
+license = "MIT"
 
 [dependencies]
 bevy = { version = "0.15.1", default-features = false, features = [ "bevy_pbr" ] }

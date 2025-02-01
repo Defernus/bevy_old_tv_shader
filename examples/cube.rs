@@ -1,5 +1,5 @@
 use bevy::prelude::*;
-use old_tv_shader::{OldTvPlugin, OldTvSettings};
+use bevy_old_tv_shader::prelude::*;
 
 /// Set up a simple 3D scene
 fn setup(

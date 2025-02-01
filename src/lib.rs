@@ -1,3 +1,5 @@
+#![doc(html_root_url = "https://docs.rs/bevy_old_tv_shader/0.2.0")]
+#![doc = include_str!("../README.md")]
 use bevy::{
     asset::embedded_asset,
     core_pipeline::{
@@ -24,6 +26,11 @@ use bevy::{
     },
 };
 
+/// Useful splat imports
+pub mod prelude {
+    pub use super::{OldTvPlugin, OldTvSettings};
+}
+
 /// Old TV plugin
 ///
 /// Makes the old TV post-processing effect available.
@@ -48,23 +55,11 @@ impl Plugin for OldTvPlugin {
         };
 
         render_app
-            // Bevy's renderer uses a render graph which is a collection of nodes in a directed acyclic graph.
-            // It currently runs on each view/camera and executes each node in the specified order.
-            // It will make sure that any node that needs a dependency from another node
-            // only runs when that dependency is done.
-            //
-            // Each node can execute arbitrary work, but it generally runs at least one render pass.
-            // A node only has access to the render world, so if you need data from the main world
-            // you need to extract it manually or with the plugin like above.
-            // Add a [`Node`] to the [`RenderGraph`]
-            // The Node needs to impl FromWorld
-            //
             // The [`ViewNodeRunner`] is a special [`Node`] that will automatically run the node for each view
             // matching the [`ViewQuery`]
             .add_render_graph_node::<ViewNodeRunner<OldTvNode>>(
                 // Specify the label of the graph, in this case we want the graph for 3d
-                Core3d,
-                // It also needs the label of the node
+                Core3d, // It also needs the label of the node
                 OldTvLabel,
             )
             .add_render_graph_edges(
@@ -180,7 +175,7 @@ impl ViewNode for OldTvNode {
 
         // Begin the render pass
         let mut render_pass = render_context.begin_tracked_render_pass(RenderPassDescriptor {
-            label: Some("post_process_pass"),
+            label: Some("old_tv_pass"),
             color_attachments: &[Some(RenderPassColorAttachment {
                 // We need to specify the post process destination view here
                 // to make sure we write to the appropriate texture.
@@ -220,7 +215,7 @@ impl FromWorld for OldTvPipeline {
 
         // We need to define the bind group layout used for our pipeline
         let layout = render_device.create_bind_group_layout(
-            "post_process_bind_group_layout",
+            "old_tv_bind_group_layout",
             &BindGroupLayoutEntries::sequential(
                 // The layout entries will only be visible in the fragment stage
                 ShaderStages::FRAGMENT,
@@ -245,7 +240,7 @@ impl FromWorld for OldTvPipeline {
             .resource_mut::<PipelineCache>()
             // This will add the pipeline to the cache and queue its creation
             .queue_render_pipeline(RenderPipelineDescriptor {
-                label: Some("post_process_pipeline".into()),
+                label: Some("old_tv_pipeline".into()),
                 layout: vec![layout.clone()],
                 // This will setup a fullscreen triangle for the vertex state
                 vertex: fullscreen_shader_vertex_state(),
