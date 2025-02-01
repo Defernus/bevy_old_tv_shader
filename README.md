@@ -1,9 +1,11 @@
 # bevy_old_tv_shader
 
 An "old TV" effect based on the Bevy [post processing example](https://github.com/bevyengine/bevy/blob/main/examples/shader/post_processing.rs). 
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/0718c9f0-177d-473b-bfe8-13c9482bc197"/>
+</p>
 
 # Usage
-
 To use this effect, add the crate to your project.
 
 ## Add the crate
@@ -64,6 +66,3 @@ cargo run --example cube
 # License
 
 This crate is licensed under the MIT License.
-
-![alt screenshot](/screenshot.png)
-
