@@ -16,7 +16,7 @@ readme = "README.md"
 license = "MIT"
 
 [dependencies]
-bevy = { version = "0.15.1", default-features = false, features = [ "bevy_pbr" ] }
+bevy = { version = "^0.15.1", default-features = false, features = [ "bevy_pbr" ] }
 
 [dev-dependencies]
-bevy = { version = "0.15.1" }
+bevy = { version = "^0.15.1" }
