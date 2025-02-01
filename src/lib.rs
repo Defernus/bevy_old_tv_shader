@@ -1,5 +1,6 @@
 #![doc(html_root_url = "https://docs.rs/bevy_old_tv_shader/0.2.0")]
 #![doc = include_str!("../README.md")]
+#![forbid(missing_docs)]
 use bevy::{
     asset::embedded_asset,
     core_pipeline::{
@@ -41,7 +42,9 @@ pub struct OldTvPlugin;
 impl Plugin for OldTvPlugin {
     fn build(&self, app: &mut App) {
         embedded_asset!(app, "old_tv.wgsl");
-        app.add_plugins((
+        app
+            .register_type::<OldTvSettings>()
+            .add_plugins((
             // The settings will be a component that lives in the main world but will
             // be extracted to the render world every frame.
             ExtractComponentPlugin::<OldTvSettings>::default(),
@@ -234,7 +237,7 @@ impl FromWorld for OldTvPipeline {
         let sampler = render_device.create_sampler(&SamplerDescriptor::default());
 
         // Get the shader handle
-        let shader = world.load_asset("embedded://old_tv_shader/old_tv.wgsl");
+        let shader = world.load_asset("embedded://bevy_old_tv_shader/old_tv.wgsl");
 
         let pipeline_id = world
             .resource_mut::<PipelineCache>()
@@ -273,29 +276,32 @@ impl FromWorld for OldTvPipeline {
     }
 }
 
-// Old TV settings
-//
-// Add this component to effect a camera. These values are passed to the shader
-// and can be updated dynamically by querying for this component.
+/// Old TV settings
+///
+/// Add this component to effect a camera. These values are passed to the shader
+/// and can be updated dynamically by querying for this component.
 #[derive(Component, Default, Clone, Copy, ExtractComponent, ShaderType, Reflect)]
 pub struct OldTvSettings {
-    /// Rounds the corners
+    /// Rounds the corners [0, 1]
     ///
-    /// The larger the value, the more rounded the screen (must be between 0 and 1).
+    /// The larger the value, the more rounded the screen.
     pub screen_shape_factor: f32,
-    /// Controls amount of screen rows
+    /// Controls number of screen rows
+    ///
+    /// The columns will be calculated using rows and the derived aspect ratio.
     pub rows: f32,
     /// Screen brightness
     ///
-    /// (I recommend setting it to 3 or 4 if you do not want create a horror game).
+    /// I recommend setting it to 3 or 4 if you do not want create a horror
+    /// game.
     pub brightness: f32,
     /// Screen edge shadow effect size
     pub edges_transition_size: f32,
-    /// RGB channel mask minimum
+    /// RGB channel mask minimum [0, 1]
     ///
     /// Each pixel contains 3 sub-pixels (red, green and blue). This option
     /// allows you to display the color of all channels in any subpixels. I
-    /// really recommend play with it (only use values between 0 and 1)
+    /// really recommend play with it.
     pub channels_mask_min: f32,
     // WebGL2 structs must be 16 byte aligned.
     // #[cfg(feature = "webgl2")]
