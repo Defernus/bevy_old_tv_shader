@@ -2,7 +2,7 @@
 
 An "old TV" effect based on the Bevy [post-processing example](https://github.com/bevyengine/bevy/blob/main/examples/shader/post_processing.rs). 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/0718c9f0-177d-473b-bfe8-13c9482bc197"/>
+  <img src="https://github.com/user-attachments/assets/0718c9f0-177d-473b-bfe8-13c9482bc197" alt="Movie of the old TV shader effect in action on 'cube' example."/>
 </p>
 
 # Usage
