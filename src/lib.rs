@@ -124,7 +124,7 @@ impl ViewNode for OldTvNode {
     ) -> Result<(), NodeRunError> {
         // Get the pipeline resource that contains the global data we need
         // to create the render pipeline
-        let post_process_pipeline = world.resource::<OldTvPipeline>();
+        let old_tv_pipeline = world.resource::<OldTvPipeline>();
 
         // The pipeline cache is a cache of all previously created pipelines.
         // It is required to avoid creating a new pipeline each frame,
@@ -132,7 +132,7 @@ impl ViewNode for OldTvNode {
         let pipeline_cache = world.resource::<PipelineCache>();
 
         // Get the pipeline from the cache
-        let Some(pipeline) = pipeline_cache.get_render_pipeline(post_process_pipeline.pipeline_id)
+        let Some(pipeline) = pipeline_cache.get_render_pipeline(old_tv_pipeline.pipeline_id)
         else {
             return Ok(());
         };
@@ -160,14 +160,14 @@ impl ViewNode for OldTvNode {
         // The only way to have the correct source/destination for the bind_group
         // is to make sure you get it during the node execution.
         let bind_group = render_context.render_device().create_bind_group(
-            "post_process_bind_group",
-            &post_process_pipeline.layout,
+            "old_tv_bind_group",
+            &old_tv_pipeline.layout,
             // It's important for this to match the BindGroupLayout defined in the OldTvPipeline
             &BindGroupEntries::sequential((
                 // Make sure to use the source view
                 post_process.source,
                 // Use the sampler created for the pipeline
-                &post_process_pipeline.sampler,
+                &old_tv_pipeline.sampler,
                 // Set the settings binding
                 settings_binding.clone(),
             )),
