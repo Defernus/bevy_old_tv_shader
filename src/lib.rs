@@ -4,6 +4,7 @@
 use bevy::{
     asset::embedded_asset,
     core_pipeline::{
+        core_2d::graph::{Core2d, Node2d},
         core_3d::graph::{Core3d, Node3d},
         fullscreen_vertex_shader::fullscreen_shader_vertex_state,
     },
@@ -26,6 +27,8 @@ use bevy::{
         RenderApp,
     },
 };
+#[cfg(feature = "ui")]
+use bevy_ui::graph::NodeUi;
 
 /// Useful splat imports
 pub mod prelude {
@@ -42,9 +45,7 @@ pub struct OldTvPlugin;
 impl Plugin for OldTvPlugin {
     fn build(&self, app: &mut App) {
         embedded_asset!(app, "old_tv.wgsl");
-        app
-            .register_type::<OldTvSettings>()
-            .add_plugins((
+        app.register_type::<OldTvSettings>().add_plugins((
             // The settings will be a component that lives in the main world but will
             // be extracted to the render world every frame.
             ExtractComponentPlugin::<OldTvSettings>::default(),
@@ -64,6 +65,17 @@ impl Plugin for OldTvPlugin {
                 // Specify the label of the graph, in this case we want the graph for 3d
                 Core3d, // It also needs the label of the node
                 OldTvLabel,
+            )
+            .add_render_graph_node::<ViewNodeRunner<OldTvNode>>(Core2d, OldTvLabel);
+        #[cfg(feature = "ui")]
+        render_app
+            .add_render_graph_edges(Core2d, (NodeUi::UiPass, OldTvLabel, Node2d::Upscaling))
+            .add_render_graph_edges(Core3d, (NodeUi::UiPass, OldTvLabel, Node3d::Upscaling));
+        #[cfg(not(feature = "ui"))]
+        render_app
+            .add_render_graph_edges(
+                Core2d,
+                (Node2d::EndMainPass, OldTvLabel, Node2d::Tonemapping),
             )
             .add_render_graph_edges(
                 Core3d,
@@ -135,8 +147,7 @@ impl ViewNode for OldTvNode {
         let pipeline_cache = world.resource::<PipelineCache>();
 
         // Get the pipeline from the cache
-        let Some(pipeline) = pipeline_cache.get_render_pipeline(old_tv_pipeline.pipeline_id)
-        else {
+        let Some(pipeline) = pipeline_cache.get_render_pipeline(old_tv_pipeline.pipeline_id) else {
             return Ok(());
         };
 
