@@ -17,7 +17,7 @@ fn main() {
             DefaultPlugins.set(WindowPlugin {
                 primary_window: Some(Window {
                     resolution: Vec2::splat(400.0).into(),
-                    title: "ui".into(),
+                    title: "text".into(),
                     ..default()
                 }),
                 ..default()
