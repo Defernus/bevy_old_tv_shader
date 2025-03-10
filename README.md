@@ -48,7 +48,14 @@ fn setup_camera(mut commands: Commands) {
 }
 ```
 
-# Example
+# Features
+
+## "ui"
+Applies the effect to the UI and text as well.
+
+# Examples
+
+## cube, 3d camera
 
 The "cube" example shows a rotating cube with the effect.
 
@@ -56,6 +63,35 @@ The "cube" example shows a rotating cube with the effect.
 cargo run --example cube
 ```
 
+## 2d
+
+The "2d" example shows 2d shapes.
+
+``` sh
+cargo run --example 2d
+```
+
+## text
+
+The "text" example shows UI text with or without the effect.
+
+### No effect on UI
+``` sh
+cargo run --example text
+```
+
+### Effect on UI
+``` sh
+cargo run  --features ui --example text
+```
+
+The "text" example also accepts an argument of "3d-camera". This was mainly used
+to spotcheck that the effect worked with a 3d camera.
+
+### Effect on UI with 3d camera
+``` sh
+cargo run  --features ui --example text 3d-camera
+```
 # Compatibility
 
 | bevy_minibuffer | bevy |
