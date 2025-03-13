@@ -63,12 +63,12 @@ The "cube" example shows a rotating cube with the effect.
 cargo run --example cube
 ```
 
-## 2d
+## shapes, 2d camera
 
-The "2d" example shows 2d shapes.
+The "shapes" example shows 2d shapes.
 
 ``` sh
-cargo run --example 2d
+cargo run --example shapes
 ```
 
 ## text
