@@ -11,7 +11,7 @@ To use this effect, add the crate to your project.
 ## Add the crate
 
 ``` sh
-cargo add --git https://github.com/shanecelis/bevy_old_tv_shader --branch bevy-0.15
+cargo add --git https://github.com/Defernus/bevy_old_tv_shader.git
 ```
 
 ## Add the plugin
