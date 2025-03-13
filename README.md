@@ -94,10 +94,10 @@ cargo run  --features ui --example text 3d-camera
 ```
 # Compatibility
 
-| bevy_minibuffer | bevy |
-|-----------------|------|
-| 0.2.0           | 0.15 |
-| 0.1.0           | 0.8  |
+| bevy_old_tv_shader | bevy |
+|--------------------|------|
+| 0.2.0              | 0.15 |
+| 0.1.0              | 0.8  |
 
 # License
 
